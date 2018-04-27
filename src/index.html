@@ -22,46 +22,58 @@
         <section class="section">
             <div class="banner swiper-container">
                 <ul class="swiper-wrapper">
-                    <li class="swiper-slide">
-                        <a href="javascript:;">
-                            <img src="img/3.png">
-                        </a>
-                    </li>
-                    <li class="swiper-slide">
-                        <a href="javascript:;">
-                            <img src="img/3.png">
-                        </a>
-                    </li>
+                    <script id="bannerimg" type="text/x-handlebars-template">
+                        {{#each this}}
+                        <li class="swiper-slide">
+                            <a href="javascript:;">
+                                <img src="{{src}}">
+                            </a>
+                        </li>
+                        {{/each}}
+                    </script>
                 </ul>
             </div>
             <div class="list">
-                <ol>
-                    <li>
-                        <img src="img/4.png">
-                        <p>活动频道</p>
-                    </li>
-                    <li>
-                        <img src="img/4.png">
-                        <p>活动频道</p>
-                    </li>
-                    <li>
-                        <img src="img/4.png">
-                        <p>活动频道</p>
-                    </li>
-                    <li>
-                        <img src="img/4.png">
-                        <p>活动频道</p>
-                    </li>
+                <ol class="ollist">
+                    <script id="oldata" type="text/x-handlebars-template">
+                        {{#each this}}
+                        <li>
+                            <img src="{{T_src}}">
+                            <p>{{H}}</p>
+                        </li>
+                        {{/each}}
+                    </script>
                 </ol>
             </div>
         </section>
     </div>
 </body>
 <script src="./js/swiper.min.js"></script>
+<script src="./js/jquery-2.1.1.min.js"></script>
 <script>
-    new Swiper("banner", {
-        autoplay: true
+    $.ajax({
+        url: "/datalist",
+        dataType: "json",
+        success: function(res) {
+            var bannerdata = res[0].banner;
+            render("#bannerimg", bannerdata, ".swiper-wrapper")
+            new Swiper("banner", {
+                autoplay: true
+            })
+            var titledata = res[0].title;
+            render("#oldata", titledata, ".ollist")
+        },
+        error: function(error) {
+            console.warn(error)
+        }
     })
+
+    function render(id, data, wrap) {
+        var source = $(id).html();
+        var template = Handlebars.compile(source);
+        var html = template(data)
+        $(wrap).html(html);
+    }
 </script>
 
 </html>

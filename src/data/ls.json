@@ -1,3 +1,22 @@
 [{
-
+    "banner": [{
+        "src": "img/3.png"
+    }, {
+        "src": "img/3.png"
+    }, {
+        "src": "img/3.png"
+    }],
+    "title": [{
+        "T_src": "img/4.png",
+        "H": "活动频道"
+    }, {
+        "T_src": "img/4.png",
+        "H": "活动频道"
+    }, {
+        "T_src": "img/4.png",
+        "H": "活动频道"
+    }, {
+        "T_src": "img/4.png",
+        "H": "活动频道"
+    }]
 }]

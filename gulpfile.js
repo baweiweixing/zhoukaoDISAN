@@ -3,6 +3,7 @@ var server = require("gulp-webserver");
 var sass = require("gulp-sass");
 var minCss = require("gulp-clean-css");
 var autoprefixer = require("gulp-autoprefixer");
+var datalist = require("src/data/ls.json")
 
 gulp.task("minCss", function() {
     gulp.src("src/scss/*.scss")
@@ -25,6 +26,9 @@ gulp.task("server", function() {
             livereload: true,
             open: true,
             middleware: function(req, res, next) {
+                if (req.url === "/datalist") {
+                    res.end(JSON.stringify(datalist))
+                }
                 next()
             }
         }))
