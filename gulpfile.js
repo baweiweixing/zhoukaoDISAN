@@ -1,5 +1,20 @@
 var gulp = require("gulp");
 var server = require("gulp-webserver");
+var sass = require("gulp-sass");
+var minCss = require("gulp-clean-css");
+var autoprefixer = require("gulp-autoprefixer");
+
+gulp.task("minCss", function() {
+    gulp.src("src/scss/*.scss")
+        .pipe(sass())
+        .pipe(autoprefixer({
+            browsers: ["last 2 versions"]
+        }))
+        .pipe(minCss())
+        .pipe(gulp.dest("src/css"))
+})
+
+
 
 
 gulp.task("server", function() {
@@ -15,8 +30,13 @@ gulp.task("server", function() {
         }))
 })
 
+gulp.task("copyCss", function() {
+    gulp.src("src/scss/*.css")
+        .pipe(gulp.dest("src/css"))
+})
+
 gulp.task("watch", function() {
     gulp.watch("server");
 })
 
-gulp.task("default", ["server"])
+gulp.task("default", ["server", "minCss"])
